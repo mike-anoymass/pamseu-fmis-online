@@ -1,4 +1,4 @@
-# pamseu-fmis-onlinea desktop offline fmis for driving schools in malawi
+# pamseu-fmis-online desktop fmis with an online database for driving schools in malawi
 
 This application
 	-is JavaFX desktop app developed in Java 8

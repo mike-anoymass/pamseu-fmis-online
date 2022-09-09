@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="ancho" fx:id="anchor" prefHeight="398.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="commision.CommisionController">
+   <children>
+      <BorderPane layoutX="169.0" layoutY="93.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <TableView fx:id="table" onKeyReleased="#tableOnKeyReleasedAction" onMouseClicked="#tableOnMouseClickedAction" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="9.0" />
+               </BorderPane.margin>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#refreshAction" text="Refresh" />
+                        <MenuItem mnemonicParsing="false" onAction="#payCommisions" text="Pay Selected Commisions" />
+                        <MenuItem mnemonicParsing="false" onAction="#unPayCommisions" text="Mark as not paid" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+         </center>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <top>
+            <VBox alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="37.0" prefWidth="823.0" style="-fx-background-color: cadetblue;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="590.0" style="-fx-background-color: cadetblue;" text="Commision Management" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="656.0" spacing="20.0">
+                     <children>
+                        <ComboBox fx:id="filterCombo" onAction="#filterByAction" opacity="0.74" prefHeight="25.0" prefWidth="183.0" promptText="Filter By" />
+                        <TextField fx:id="filtersTxt" onKeyReleased="#filterOnKeyReleased" prefHeight="25.0" prefWidth="144.0" promptText="Search Commision" />
+                        <Label fx:id="countLbl" alignment="CENTER" prefHeight="19.0" prefWidth="175.0" style="-fx-border-color: cadetblue;" textFill="#57574e">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="exportBtn" buttonType="RAISED" onAction="#exportAction" prefHeight="25.0" prefWidth="167.0" ripplerFill="#1040c6" style="-fx-background-color: white;" text="Export List to Excel" textFill="#4fbfbf">
+                           <font>
+                              <Font name="Arial Black" size="12.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIcon fill="#4fbfbf" fontSmoothingType="LCD" glyphName="TABLE" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

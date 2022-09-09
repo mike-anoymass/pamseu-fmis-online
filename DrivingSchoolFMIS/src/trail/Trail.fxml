@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trail.TrailController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <top>
+            <VBox alignment="CENTER_RIGHT" prefHeight="76.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: cadetblue;">
+                     <children>
+                        <Label fx:id="receiptLbl" alignment="CENTER" prefHeight="15.0" prefWidth="593.0" style="-fx-background-color: cadetblue;" text="Audit Login History" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="7.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="656.0">
+                     <children>
+                        <TextField fx:id="filterTxt" onKeyReleased="#filterDataOnkeyReleased" promptText="Search records">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" right="2.0" top="6.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="3.0" />
+         </padding>
+      </BorderPane>
+   </children>
+</AnchorPane>

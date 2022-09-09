@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="ancho" fx:id="anchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.HomeController">
+   <children>
+      <BorderPane layoutX="132.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <bottom>
+                  <HBox fx:id="gaugeHBox" alignment="CENTER" prefHeight="134.0" prefWidth="1150.0" spacing="30.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox fx:id="studentBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                        <HBox fx:id="coursesBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                        <HBox fx:id="courseTypeBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                  </HBox>
+               </bottom>
+               <left>
+                  <TitledPane animated="false" style="-fx-border-color: cadetblue;" text="Compare Payments and Receipts for this month" textFill="CADETBLUE" BorderPane.alignment="CENTER">
+                    <content>
+                      <AnchorPane minHeight="300.0" minWidth="550.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="pieChartImg" fitHeight="300.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <BorderPane.margin>
+                        <Insets left="10.0" />
+                     </BorderPane.margin>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </TitledPane>
+               </left>
+               <right>
+                  <TitledPane animated="false" style="-fx-border-color: cadetblue;" text="Courses and Number Students" textFill="CADETBLUE" BorderPane.alignment="CENTER">
+                    <content>
+                      <AnchorPane minHeight="298.0" minWidth="600.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="barchartImg" fitHeight="298.0" fitWidth="600.0" pickOnBounds="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-20.0" AnchorPane.topAnchor="-15.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </TitledPane>
+               </right>
+            </BorderPane>
+         </center>
+         <top>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="1150.0" style="-fx-background-color: cadetblue;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="33.0" prefWidth="600.0" style="-fx-background-color: cadetblue;" text="Dashboard" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <VBox prefHeight="33.0" prefWidth="1168.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXProgressBar fx:id="progressBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="1168.0" />
+                  <Text fx:id="progressText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="199.13671875" />
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="2.0" right="2.0" top="3.0" />
+   </padding>
+</AnchorPane>

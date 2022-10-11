@@ -200,13 +200,13 @@ public class ReceiptFormController {
     
     public String toString(Student student, Receipts receipt) {
         String details
-                = "===================RECEIPT DETAILS================"
+                = "*******RECEIPT DETAILS*******"
                 + "\nRECEIVED FROM: " + student.getStudent_name()
                 + "\nTHE SUM OF: MK" + receipt.getAmount()
                 + "\nMODE OF PAYMENT: " + receipt.getMop()
                 + "\nPAYMENT OF: " + receipt.getBpo()
                 + "\nRECEIVED BY: " + LoginDocumentController.firstname + " " + LoginDocumentController.lastname
-                + "\n----------------------------------------------------------"
+                + "\n______________________________"
                 + "\nDATE PAID: " + receipt.getDateOfReceipt();
         return details;
     }

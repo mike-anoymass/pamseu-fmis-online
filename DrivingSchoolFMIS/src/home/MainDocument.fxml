@@ -192,7 +192,7 @@
                               <FontAwesomeIcon fill="#5e4d4d" glyphName="CAR" size="1.5em" text="" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnAllocations" mnemonicParsing="false" style="-fx-background-color: white;" textFill="#eb2626">
+                        <Button fx:id="btnAllocations" mnemonicParsing="false" onAction="#goToAllocations" style="-fx-background-color: white;" textFill="#eb2626">
                            <graphic>
                               <FontAwesomeIcon fill="#5e4d4d" glyphName="CALENDAR" size="1.5em" />
                            </graphic>

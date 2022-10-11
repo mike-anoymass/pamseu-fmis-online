@@ -27,7 +27,7 @@ public class StudentQueries {
             + " anyGovernmentFee, graduated, id, addedBy, "
             + "g.phone AS gPhone,physicalAddress, name "
             + "FROM students INNER JOIN studentnextofkins AS g ON students.studentID=g.studentID "
-            + "ORDER BY students.studentID DESC";
+            ;
 
     /*public ObservableList<Student> getStudentsWithFees() {
          PreparedStatement pst = null;
@@ -96,7 +96,7 @@ public class StudentQueries {
         ObservableList<Student> students = FXCollections.observableArrayList();
 
         try {
-            pst = conn.prepareStatement(studentAndGuardianQuery);
+            pst = conn.prepareStatement(studentAndGuardianQuery + " ORDER BY students.studentID DESC");
             rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -276,8 +276,8 @@ public class StudentQueries {
         try {
             pst = conn.prepareStatement(
                     studentAndGuardianQuery
-                    + " WHERE graduated=?"
-                    + " order by date DESC");
+                    + " WHERE graduated=? "
+                    + " order by date DESC ");
             pst.setBoolean(1, false);
             rs = pst.executeQuery();
 

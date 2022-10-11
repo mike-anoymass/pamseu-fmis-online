@@ -32,6 +32,7 @@ public class StageManager {
     public static Stage loadingStage1 = new Stage();
     public static Stage loadingStage = new Stage();
     public static Stage loginStage = new Stage();
+    public static Stage allocationStage = new Stage();
 
     public static void setStages(){
         browse(announcementStage, receiptStage, historyStage);
@@ -45,6 +46,8 @@ public class StageManager {
         browse(staffPaymentStage, staffHistoryStage , new Stage());
         
         browse(loadingStage, loadingStage1, loginStage, new Stage());
+        
+        allocation(allocationStage);
           
     }
 
@@ -82,5 +85,10 @@ public class StageManager {
         
     }
 
+    private static void allocation(Stage allocationStage) {
+        allocationStage.initModality(Modality.WINDOW_MODAL);
+        allocationStage.setResizable(true);
+        allocationStage.initOwner(ParentStage);
+    }
 
 }

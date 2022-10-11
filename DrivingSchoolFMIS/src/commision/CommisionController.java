@@ -23,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javax.swing.filechooser.FileSystemView;
+import login.LoginDocumentController;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -51,6 +52,9 @@ public class CommisionController {
     @FXML
     private JFXButton exportBtn;
 
+    @FXML
+    private TextField rateTxt;
+
     private FilteredList<Commission> filteredData;
 
     private ObservableList<Commission> data = FXCollections.observableArrayList();
@@ -62,8 +66,14 @@ public class CommisionController {
         setTable();
         setFilterCombo();
         sumUpCommisions();
+        setCommisionRate();
 
         filteredData = new FilteredList<>(data, e -> true);
+    }
+
+    public void setCommisionRate() {
+        double rate = new CommissionQueries().getRate();
+        rateTxt.setText("" + rate);
     }
 
     public void setFilterCombo() {
@@ -353,6 +363,28 @@ public class CommisionController {
         data.clear();
 
         data.addAll(comms);
+    }
+
+    @FXML
+    void updateCommisionRate(ActionEvent event) {
+
+        if ("admin".equals(LoginDocumentController.userType)) {
+            String rateText = rateTxt.getText();
+
+            try {
+                double rate = Double.parseDouble(rateText);
+
+                new CommissionQueries().setRate(rate);
+
+                showNotification("Commision rate has been updated successfully");
+
+            } catch (NumberFormatException ex) {
+                makeAlert("error", "Please enter a floating point commision rate");
+            }
+        } else {
+            makeAlert("warning", "Access Denied !");
+        }
+
     }
 
 }

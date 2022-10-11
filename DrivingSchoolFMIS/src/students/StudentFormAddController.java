@@ -219,14 +219,14 @@ public class StudentFormAddController implements Initializable {
 
     public String toString(Student student) {
         String details
-                = "===================STUDENT DETAILS================"
+                = "********STUDENT DETAILS********"
                 + "\nFULL NAME: " + student.getStudent_name()
                 + "\nGENDER: " + student.getGender()
                 + "\nCOURSE: " + student.getCourse()
                 + "\nCOURSE TYPE: " + student.getCourseType()
                 + "\nPHONE NUMBER: " + student.getStudent_phone()
                 + "\nPOSTAL ADDRESS: " + student.getStudent_address()
-                + "\n----------------------------------------------------------"
+                + "\n___________________________________"
                 + "\nGUARDIAN NAME: " + student.getGuardian_name()
                 + "\nDATE REGISTERED: " + student.getDateRegistered()
                 + "\nADDED BY: " + LoginDocumentController.firstname + " " + LoginDocumentController.lastname;

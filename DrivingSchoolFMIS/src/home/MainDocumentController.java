@@ -412,6 +412,25 @@ public class MainDocumentController implements Initializable {
         }
     }
 
+    @FXML
+    void goToAllocations(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            BorderPane root = loader.load(getClass().getResource("/vehicles/Allocations.fxml").openStream());
+
+            Scene scene = new Scene(root);
+            StageManager.allocationStage.setScene(scene);
+            StageManager.allocationStage.getIcons().add(new Image("img/newstudenticon_16.png"));
+            StageManager.allocationStage.setTitle("Student Allocation");
+
+            StageManager.allocationStage.show();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+    }
+
     private void setTooltips() {
 
         btnHome.setTooltip(new Tooltip("Dashboard"));

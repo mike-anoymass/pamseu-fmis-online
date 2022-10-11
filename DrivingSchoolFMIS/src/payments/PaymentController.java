@@ -716,14 +716,14 @@ public class PaymentController implements Initializable {
     
     public String toString(Payment payment) {
         String details
-                = "===================PAYMENT DETAILS================"
+                = "***********PAYMENT DETAILS************"
                 + "\nPAYMENT FOR: " + payment.getExpense()
                 + "\nAMOUNT: MK" + payment.getAmount()
                 + "\nMODE OF PAYMENT: " + payment.getMode()
                 + "\nDESCRIPTION: " + payment.getMirage()
                 + "\nREFERENCE: " + payment.getRef()
                 + "\nRECORDED BY: " + LoginDocumentController.firstname + " " + LoginDocumentController.lastname
-                + "\n----------------------------------------------------------"
+                + "\n_______________________________"
                 + "\nDATE OF PAYMENT: " + payment.getDateOfPayment();
         return details;
     }

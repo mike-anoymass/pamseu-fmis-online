@@ -126,7 +126,7 @@ public class StaffFormAddController {
                 nextOfKin.setEmployee(staff.getId());
 
                 empQuery.addNextOfKin(nextOfKin);
-                new AddExpense().add(new Expense(emp.getFullName(), ""));
+                //new AddExpense().add(new Expense(emp.getFullName(), ""));
 
                 clearTextFields();
                 boolean confirmed = confirm("Employee");

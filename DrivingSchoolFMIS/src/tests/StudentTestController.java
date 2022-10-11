@@ -96,7 +96,7 @@ public class StudentTestController {
         );
 
         if (new ValidateFieldsClass().validateTest(test)) {
-            if (testTaken.equals("Road test")) {
+            if (testTaken.equals("Road test") && instructorCombo.isVisible()) {
 
                 String driver = instructorCombo.getSelectionModel().getSelectedItem();
                 String staffID = "";
@@ -269,6 +269,8 @@ public class StudentTestController {
 
         String fees = calculate.getTotalFee();
 
-        return Double.parseDouble(fees) * 2.2 / 100;
+        double rate = new CommissionQueries().getRate();
+
+        return Double.parseDouble(fees) * rate / 100;
     }
 }

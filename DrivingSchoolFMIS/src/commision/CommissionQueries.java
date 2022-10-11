@@ -45,10 +45,9 @@ public class CommissionQueries {
                             + " datePaid=NOW() WHERE test=?");
                     pst.setBoolean(1, true);
                     pst.setInt(2, selected.get(i).getTestID());
-                     pst.executeUpdate();
+                    pst.executeUpdate();
                 }
 
-               
             } catch (SQLException ex) {
                 Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -82,42 +81,41 @@ public class CommissionQueries {
 
         if (action & conn != null) {
 
-            
-                try {
-                    
-                    for (int i = 0; i < selected.size(); i++) {
-                        pst = conn.prepareStatement("UPDATE commisions "
-                                + "SET datePaid=NULL, isPaid=? WHERE test=?");
-                        pst.setBoolean(1, false);
-                        pst.setInt(2, selected.get(i).getTestID());
+            try {
 
-                        pst.executeUpdate();
-                    }
-                   
-                } catch (SQLException ex) {
-                    Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+                for (int i = 0; i < selected.size(); i++) {
+                    pst = conn.prepareStatement("UPDATE commisions "
+                            + "SET datePaid=NULL, isPaid=? WHERE test=?");
+                    pst.setBoolean(1, false);
+                    pst.setInt(2, selected.get(i).getTestID());
 
-                } finally {
-                    try {
-
-                        if (rs != null) {
-                            rs.close();
-                        }
-
-                        if (pst != null) {
-                            pst.close();
-                        }
-
-                        conn.close();
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    pst.executeUpdate();
                 }
 
+            } catch (SQLException ex) {
+                Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+            } finally {
+                try {
+
+                    if (rs != null) {
+                        rs.close();
+                    }
+
+                    if (pst != null) {
+                        pst.close();
+                    }
+
+                    conn.close();
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            return 101;
-     
+
+        }
+        return 101;
+
     }
 
     public ObservableList<Test> getCommissionFor(String id) {
@@ -384,6 +382,84 @@ public class CommissionQueries {
         }
 
         return comm;
+    }
+
+    public double getRate() {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = new SqlConnection().DbConnector();
+        ObservableList<Commission> comm = FXCollections.observableArrayList();
+
+        try {
+            pst = conn.prepareStatement("Select * from commisionrate");
+
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                return rs.getDouble("rate");
+            }
+
+            return 0.0;
+        } catch (SQLException ex) {
+            Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (pst != null) {
+                    pst.close();
+                }
+
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return 0.0;
+    }
+
+    public void setRate(double rate) {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = new SqlConnection().DbConnector();
+
+        if (conn != null) {
+
+            try {
+                pst = conn.prepareStatement("UPDATE commisionrate SET rate=?"
+                        + " where id = ?");
+                pst.setDouble(1, rate);
+                pst.setInt(2, 1);
+                pst.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+            } finally {
+                try {
+
+                    if (rs != null) {
+                        rs.close();
+                    }
+
+                    if (pst != null) {
+                        pst.close();
+                    }
+
+                    conn.close();
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CommissionQueries.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
     }
 
 }

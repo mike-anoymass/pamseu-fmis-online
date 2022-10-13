@@ -6,6 +6,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import commision.Commission;
+import commision.CommissionQueries;
 import data.LoadData;
 import login.LoginDocumentController;
 import payments.Payment;
@@ -34,6 +36,7 @@ import java.util.ResourceBundle;
 
 import static settings.AlertClass.makeAlert;
 import static drivingschoolfmis.DrivingSchoolFMIS.schoolName;
+import vehicles.Allocation;
 
 public class FinancialReportController implements Initializable {
 
@@ -70,6 +73,13 @@ public class FinancialReportController implements Initializable {
     @FXML
     private TableView<Payment> paymentsTable;
 
+    @FXML
+    private ComboBox<String> dayCombo;
+    @FXML
+    private Label commisionLbl;
+    @FXML
+    private TableView<Commission> commisionTable;
+
     private ObservableList<String> years = FXCollections.observableArrayList();
 
     private ObservableList<String> months = FXCollections.observableArrayList();
@@ -82,6 +92,10 @@ public class FinancialReportController implements Initializable {
 
     private ObservableList<Payment> paymentsForYear = FXCollections.observableArrayList();
 
+    private ObservableList<Commission> commisions = FXCollections.observableArrayList();
+
+    private ObservableList<Commission> commisionsForYear = FXCollections.observableArrayList();
+
     private String[] monthArray;
 
     String label;
@@ -90,7 +104,10 @@ public class FinancialReportController implements Initializable {
 
     private Double totalPayments = 0.0;
     private Double totalReceipts = 0.0;
+    private Double totalCommisions = 0.0;
     private Double pl = 0.0;
+    @FXML
+    private Label commLbl;
 
     @FXML
     void monthAction(ActionEvent event) {
@@ -101,15 +118,17 @@ public class FinancialReportController implements Initializable {
     void printAction(ActionEvent event) {
         ObservableList<Receipts> rec = FXCollections.observableArrayList();
         ObservableList<Payment> pay = FXCollections.observableArrayList();
+         ObservableList<Commission> comm = FXCollections.observableArrayList();
         rec = receiptsTable.getItems();
         pay = paymentsTable.getItems();
+        comm = commisionTable.getItems();
 
-        if(rec.size() > 0 || pay.size() > 0){
+        if (rec.size() > 0 || pay.size() > 0) {
             try {
                 Document doc = new Document();
-                String fileName = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +
-                        "\\" + schoolName  +
-                        " FMIS\\financial Report" + System.currentTimeMillis() + ".pdf";
+                String fileName = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()
+                        + "\\" + schoolName
+                        + " FMIS\\financial Report" + System.currentTimeMillis() + ".pdf";
 
                 PdfWriter.getInstance(doc, new FileOutputStream(fileName));
                 doc.open();
@@ -120,8 +139,8 @@ public class FinancialReportController implements Initializable {
                         FontFactory.getFont(FontFactory.TIMES_BOLD, 20, Font.BOLD, BaseColor.DARK_GRAY))
                 );
                 doc.add(new Paragraph("Printed by "
-                        + LoginDocumentController.firstname + " " + LoginDocumentController.lastname +
-                        " on "+ new Date().toString()
+                        + LoginDocumentController.firstname + " " + LoginDocumentController.lastname
+                        + " on " + new Date().toString()
                 ));
                 doc.add(Chunk.NEWLINE);
                 doc.add(new LineSeparator());
@@ -138,7 +157,7 @@ public class FinancialReportController implements Initializable {
                 table0.addCell("Total Receipts:");
                 table0.addCell(rcLbl.getText());
                 table0.addCell("Total Payments:");
-                table0.addCell(pyLbl.getText());
+                table0.addCell(String.valueOf(totalPayments + totalCommisions));
                 table0.addCell(profitLbl.getText());
                 table0.addCell(pLabel.getText());
 
@@ -156,14 +175,12 @@ public class FinancialReportController implements Initializable {
                 titleCellr.setHorizontalAlignment(Element.ALIGN_CENTER);
                 titleCellr.setBackgroundColor(BaseColor.GREEN);
 
-
                 tabler.addCell(titleCellr);
                 tabler.addCell("Received From");
                 tabler.addCell("Date");
                 tabler.addCell("Amount (MK)");
 
-
-                for(Receipts r : rec){
+                for (Receipts r : rec) {
                     tabler.addCell(r.getFullname());
                     tabler.addCell(r.getDateOfReceipt());
                     tabler.addCell(r.getAmount());
@@ -176,22 +193,26 @@ public class FinancialReportController implements Initializable {
                 titleCellp.setHorizontalAlignment(Element.ALIGN_CENTER);
                 titleCellp.setBackgroundColor(BaseColor.RED);
 
-
                 tablep.addCell(titleCellp);
                 tablep.addCell("Expense");
                 tablep.addCell("Date");
                 tablep.addCell("Amount (MK)");
 
-                for(Payment p : pay){
+                for (Payment p : pay) {
                     tablep.addCell(p.getExpense());
                     tablep.addCell(p.getDateOfPayment());
                     tablep.addCell(p.getAmount());
+                }
+                
+                for (Commission c : comm){
+                    tablep.addCell(c.getStaff());
+                    tablep.addCell(c.getDatePaid());
+                    tablep.addCell(String.valueOf(c.getCommision()));
                 }
 
                 table1.addCell(titleCell1);
                 table1.addCell(tabler);
                 table1.addCell(tablep);
-
 
                 doc.add(table0);
                 doc.add(Chunk.NEWLINE);
@@ -208,8 +229,8 @@ public class FinancialReportController implements Initializable {
 
                 doc.close();
 
-                makeAlert("information","Report Saved Successfully !\n\n" +
-                        "Location of the report: *"+fileName+"*");
+                makeAlert("information", "Report Saved Successfully !\n\n"
+                        + "Location of the report: *" + fileName + "*");
             } catch (DocumentException e) {
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
@@ -219,8 +240,8 @@ public class FinancialReportController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
-            makeAlert("warning" , "Nothing to print \nLoad data first from the top");
+        } else {
+            makeAlert("warning", "Nothing to print \nLoad data first from the top");
         }
     }
 
@@ -233,59 +254,119 @@ public class FinancialReportController implements Initializable {
     void refreshAction(ActionEvent event) {
         yearCombo.getSelectionModel().select(null);
         monthCombo.getSelectionModel().select(null);
+        dayCombo.getSelectionModel().select(null);
     }
 
     @FXML
     void generateAction(ActionEvent event) {
         String selectedYear = yearCombo.getSelectionModel().getSelectedItem();
         String selectedMonth = monthCombo.getSelectionModel().getSelectedItem();
+        String day = dayCombo.getSelectionModel().getSelectedItem();
 
-        if(selectedYear == null){
+        if (selectedYear == null) {
             makeAlert("warning", "Please Select Year");
-        }else{
+        } else {
             loadReceipts();
             loadPayments();
-            if(selectedMonth != null ){
+            loadCommisions();
+            if (selectedMonth != null && day != null) {
                 monthArray = selectedMonth.split("~");
-                for(Receipts receipt: receiptData){
-
-                    if(receipt.getDate().startsWith(selectedYear) &
-                            receipt.getDate().split("-")[1].equals(monthArray[0]) ){
+                for (Receipts receipt : receiptData) {
+                    if (receipt.getDateOfReceipt().startsWith(selectedYear)
+                            & receipt.getDateOfReceipt().split("-")[1].equals(monthArray[0])
+                            & receipt.getDateOfReceipt().split("-")[2].equals(day)) {
 
                         receiptForYear.add(receipt);
                     }
                 }
 
-                for(Payment payment: payment){
+                for (Payment payment : payment) {
 
-                    if(payment.getDate().startsWith(selectedYear) &
-                            payment.getDate().split("-")[1].equals(monthArray[0]) ){
+                    if (payment.getDateOfPayment().startsWith(selectedYear)
+                            & payment.getDateOfPayment().split("-")[1].equals(monthArray[0])
+                            & payment.getDateOfPayment().split("-")[2].equals(day)) {
 
                         paymentsForYear.add(payment);
                     }
                 }
-            }else{
-                for(Receipts receipt: receiptData){
-                    if(receipt.getDate().startsWith(selectedYear)){
+                
+                for (Commission commision: commisions ) {
+
+                    if (commision.getDatePaid().startsWith(selectedYear)
+                            & commision.getDatePaid().split("-")[1].equals(monthArray[0])
+                            & commision.getDatePaid().split("-")[2].split(" ")[0].equals(day)) {
+
+                        commisionsForYear.add(commision);
+                    }
+                }
+                
+                
+            } else if (selectedMonth != null) {
+                monthArray = selectedMonth.split("~");
+                for (Receipts receipt : receiptData) {
+
+                    if (receipt.getDateOfReceipt().startsWith(selectedYear)
+                            & receipt.getDateOfReceipt().split("-")[1].equals(monthArray[0])) {
+
                         receiptForYear.add(receipt);
                     }
                 }
 
-                for(Payment payment: payment){
-                    if(payment.getDate().startsWith(selectedYear)){
+                for (Payment payment : payment) {
+
+                    if (payment.getDateOfPayment().startsWith(selectedYear)
+                            & payment.getDateOfPayment().split("-")[1].equals(monthArray[0])) {
+
                         paymentsForYear.add(payment);
                     }
                 }
+                
+                for (Commission commision: commisions ) {
+
+                    if (commision.getDatePaid().startsWith(selectedYear)
+                            & commision.getDatePaid().split("-")[1].equals(monthArray[0])) {
+
+                        commisionsForYear.add(commision);
+                    }
+                }
+            } else {
+                for (Receipts receipt : receiptData) {
+                    if (receipt.getDate().startsWith(selectedYear)) {
+                        receiptForYear.add(receipt);
+                    }
+                }
+
+                for (Payment payment : payment) {
+                    if (payment.getDate().startsWith(selectedYear)) {
+                        paymentsForYear.add(payment);
+                    }
+                }
+                
+                for (Commission commision: commisions ) {
+
+                    if (commision.getDatePaid().startsWith(selectedYear)) {
+                        commisionsForYear.add(commision);
+                    }
+                }
+                
+                
             }
-
-            if(selectedMonth == null){
+            
+             if (selectedMonth != null && day != null ){
+                receiptLbl.setText("Receipts in " + selectedYear + " " + monthArray[1]  + " " + day);
+                label = selectedYear + " " + monthArray[1] + " " + day;
+                paymentsLbl.setText("Payments in " + selectedYear + " " + monthArray[1]  + " " + day);
+                commisionLbl.setText("Commisions in " + selectedYear + " " + monthArray[1] + " " + day);
+            }else if (selectedMonth == null) {
                 receiptLbl.setText("Receipts in " + selectedYear);
                 label = selectedYear;
                 paymentsLbl.setText("Payments in " + selectedYear);
-            }else{
-                receiptLbl.setText("Receipts in " + selectedYear + " " + monthArray[1] );
-                label = selectedYear + " " + monthArray[1] ;
-                paymentsLbl.setText("Payments in " + selectedYear + " " + monthArray[1] );
+                commisionLbl.setText("Commisions in " + selectedYear);
+            } else {
+                receiptLbl.setText("Receipts in " + selectedYear + " " + monthArray[1]);
+                label = selectedYear + " " + monthArray[1];
+                paymentsLbl.setText("Payments in " + selectedYear + " " + monthArray[1]);
+                commisionLbl.setText("Commisions in " + selectedYear + " " + monthArray[1]);
             }
 
             pyLbl.setText("");
@@ -294,23 +375,36 @@ public class FinancialReportController implements Initializable {
 
             int count = 0;
 
-            if(receiptForYear.size() > 0){
+            if (receiptForYear.size() > 0) {
                 loadReceiptsDataInTable();
                 setReceiptLabel();
                 count++;
-            }else{
+            } else {
+                setReceiptLabel();
                 makeAlert("warning", "There are no Receipts for this Period");
+
+            }
+            
+            if (commisionsForYear.size() > 0) {
+                loadCommisionDataInTable();
+                setCommisionLabel();
+                count++;
+            } else {
+                setCommisionLabel();
+                makeAlert("warning", "There are no paid Commisions for this Period");
+
             }
 
-            if(paymentsForYear.size() > 0){
+            if (paymentsForYear.size() > 0) {
                 loadPaymentsDataInTable();
                 setPaymentLabels();
                 count++;
-            }else{
+            } else {
+                setPaymentLabels();
                 makeAlert("warning", "There are no Payments for this Period");
             }
 
-            if(count > 0){
+            if (count > 0) {
                 calculateProfitOrLoss();
             }
 
@@ -320,11 +414,11 @@ public class FinancialReportController implements Initializable {
 
     private void calculateProfitOrLoss() {
         pl = 0.0;
-        pl = totalReceipts - totalPayments;
+        pl = totalReceipts - (totalPayments + totalCommisions);
 
-        if(pl > 0){
+        if (pl > 0) {
             profitLbl.setText("Profit: ");
-        }else{
+        } else {
             profitLbl.setText("Loss: ");
         }
 
@@ -333,7 +427,7 @@ public class FinancialReportController implements Initializable {
 
     private void setPaymentLabels() {
         totalPayments = 0.0;
-        for(int i = 0; i < paymentsForYear.size(); i++){
+        for (int i = 0; i < paymentsForYear.size(); i++) {
             totalPayments += Double.parseDouble(paymentsForYear.get(i).getAmount());
         }
 
@@ -342,7 +436,7 @@ public class FinancialReportController implements Initializable {
 
     private void setReceiptLabel() {
         totalReceipts = 0.0;
-        for(int i = 0; i < receiptForYear.size(); i++){
+        for (int i = 0; i < receiptForYear.size(); i++) {
             totalReceipts += Double.parseDouble(receiptForYear.get(i).getAmount());
         }
 
@@ -353,7 +447,6 @@ public class FinancialReportController implements Initializable {
         paymentsTable.setItems(paymentsForYear);
     }
 
-
     private void setPaymentsTable() {
         paymentsTable.setEditable(true);
 
@@ -362,17 +455,15 @@ public class FinancialReportController implements Initializable {
         TableColumn col3 = new TableColumn("Cost/Amount (MK)");
         TableColumn col6 = new TableColumn("Date of Payment");
 
-
         col1.setMinWidth(70);
-        col2.setMinWidth(150);
+        col2.setMinWidth(130);
         col3.setMinWidth(130);
-        col6.setMinWidth(150);
-
+        col6.setMinWidth(130);
 
         col1.setCellValueFactory(new PropertyValueFactory<>("id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("expense"));
         col3.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("date"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("dateOfPayment"));
 
         paymentsTable.getColumns().addAll(col1, col2, col3, col6);
     }
@@ -386,14 +477,13 @@ public class FinancialReportController implements Initializable {
 
         TableColumn col1 = new TableColumn("Receipt No.");
         TableColumn col2 = new TableColumn("Student Name");
-        TableColumn col22= new TableColumn("Amount (MK)");
+        TableColumn col22 = new TableColumn("Amount (MK)");
         TableColumn col3 = new TableColumn("Date");
 
         col1.setMinWidth(80);
-        col2.setMinWidth(150);
-        col22.setMinWidth(80);
-        col3.setMinWidth(150);
-
+        col2.setMinWidth(140);
+        col22.setMinWidth(100);
+        col3.setMinWidth(130);
 
         receiptsTable.getColumns().addAll(col1, col2, col22, col3);
 
@@ -424,12 +514,14 @@ public class FinancialReportController implements Initializable {
         anchor.getStylesheets().add(getClass().getResource("/css/students.css").toExternalForm());
         setYearCombo();
         setMonthCombo();
+        setDayCombo();
         setPaymentsTable();
         setReceiptsTable();
+        setCommisionTable();
     }
 
     private void setYearCombo() {
-        years.addAll("2021", "2022", "2023","2024", "2025", "2026" );
+        years.addAll("2021", "2022", "2023", "2024", "2025", "2026");
 
         yearCombo.setItems(years);
     }
@@ -439,5 +531,53 @@ public class FinancialReportController implements Initializable {
                 "07~July", "08~August", "09~September", "10~October", "11~November", "12~December");
 
         monthCombo.setItems(months);
+    }
+
+    private void setDayCombo() {
+        ObservableList<String> days = FXCollections.observableArrayList();
+        days.addAll("01", "02", "03", "04", "05", "06",
+                "07", "08", "09", "10", "11", "12", "13", "14", "15", "16",
+                "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
+                "27", "28", "29", "30", "31");
+
+        dayCombo.setItems(days);
+    }
+
+    private void setCommisionTable() {
+        commisionTable.setEditable(true);
+
+        TableColumn col1 = new TableColumn("Commision For");
+        TableColumn col2 = new TableColumn("Amount (MK)");
+        TableColumn col22 = new TableColumn("Date of payment");
+
+        col1.setMinWidth(100);
+        col2.setMinWidth(100);
+        col22.setMinWidth(100);
+
+        commisionTable.getColumns().addAll(col1, col2, col22);
+
+        col1.setCellValueFactory(new PropertyValueFactory<>("staff"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("commision"));
+        col22.setCellValueFactory(new PropertyValueFactory<>("datePaid"));
+    }
+
+    private void loadCommisions() {
+        commisions.clear();
+        commisionsForYear.clear();
+
+        commisions.addAll(new CommissionQueries().getPaidCommisions());
+    }
+
+    private void loadCommisionDataInTable() {
+        commisionTable.setItems(commisionsForYear);
+    }
+
+    private void setCommisionLabel() {
+        totalCommisions = 0.0;
+        for (int i = 0; i < commisionsForYear.size(); i++) {
+            totalCommisions += commisionsForYear.get(i).getCommision();
+        }
+
+        commLbl.setText(totalCommisions + " MK");
     }
 }

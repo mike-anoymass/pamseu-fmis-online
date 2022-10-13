@@ -13,15 +13,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="anchor2" fx:id="anchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="financial_report.FinancialReportController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <ComboBox fx:id="yearCombo" onAction="#yearCombo" prefHeight="25.0" prefWidth="151.0" promptText="Select Year" />
-                  <ComboBox fx:id="monthCombo" onAction="#monthAction" prefHeight="25.0" prefWidth="161.0" promptText="Select Month" />
+                  <ComboBox fx:id="dayCombo" prefHeight="25.0" prefWidth="78.0" promptText="Day" />
+                  <ComboBox fx:id="monthCombo" onAction="#monthAction" prefHeight="25.0" prefWidth="129.0" promptText="Select Month" />
+                  <ComboBox fx:id="yearCombo" onAction="#yearCombo" prefHeight="25.0" prefWidth="118.0" promptText="Select Year" />
                   <JFXButton buttonType="RAISED" onAction="#generateAction" prefHeight="25.0" prefWidth="107.0" style="-fx-background-color: white;" text="Load Data" textFill="#0ac78c">
                      <font>
                         <Font name="Arial Black" size="12.0" />
@@ -87,6 +87,16 @@
                               <TableView fx:id="paymentsTable" prefHeight="290.0" prefWidth="563.0" />
                            </children>
                         </VBox>
+                        <VBox prefHeight="246.0" prefWidth="516.0">
+                           <children>
+                              <Label fx:id="commisionLbl" alignment="CENTER" prefHeight="17.0" prefWidth="525.0" text="Paid Commisions">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="commisionTable" prefHeight="292.0" prefWidth="563.0" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </children>
@@ -128,6 +138,20 @@
                                  </font>
                               </Label>
                               <Label fx:id="pyLbl" prefHeight="40.0" prefWidth="164.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="40.0" prefWidth="164.0" text="Total Commisions:">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="commLbl" prefHeight="40.0" prefWidth="164.0">
                                  <font>
                                     <Font size="13.0" />
                                  </font>

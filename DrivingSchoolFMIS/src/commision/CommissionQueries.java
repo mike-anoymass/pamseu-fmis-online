@@ -31,7 +31,7 @@ public class CommissionQueries {
             + "JOIN tests t on t.id=c.test "
             + "JOIN students s on s.studentID=t.student ";
 
-    static int payCommisions(ObservableList<Commission> selected, boolean action) {
+    public static int payCommisions(ObservableList<Commission> selected, boolean action) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = new SqlConnection().DbConnector();
@@ -270,7 +270,7 @@ public class CommissionQueries {
         return comm;
     }
 
-    ObservableList<Commission> getPaidCommisions() {
+    public ObservableList<Commission> getPaidCommisions() {
         PreparedStatement pst = null;
         ResultSet rs = null;
         Connection conn = new SqlConnection().DbConnector();

@@ -1,9 +1,28 @@
 package vehicles;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import static drivingschoolfmis.DrivingSchoolFMIS.schoolName;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,8 +33,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javax.swing.filechooser.FileSystemView;
+import login.LoginDocumentController;
 import org.controlsfx.control.textfield.TextFields;
+import receipts.Receipts;
+import static receipts.ReceiptsController.report;
 import static settings.AlertClass.makeAlert;
 import static settings.NotificationClass.showNotification;
 import staff.Employee;
@@ -25,6 +49,8 @@ import students.StudentQueries;
 
 public class AllocationsController {
 
+    @FXML
+    private BorderPane bPane;
     @FXML
     private TableView<Allocation> tableView;
     @FXML
@@ -61,6 +87,7 @@ public class AllocationsController {
     static ObservableList<Allocation> allocations = FXCollections.observableArrayList();
 
     public void initialize() {
+        bPane.getStylesheets().add(getClass().getResource("/css/students.css").toExternalForm());
         allocations.clear();
         prepareTable();
         loadDate();
@@ -79,7 +106,7 @@ public class AllocationsController {
     void initiate(ActionEvent event) {
         try {
             String[] staffObj, vehicleObj;
-            String student, staff, vehicle;
+            String staff, vehicle;
             LocalDate localDate;
 
             staff = driverCombo.getSelectionModel().getSelectedItem();
@@ -108,7 +135,91 @@ public class AllocationsController {
 
     @FXML
     void print(ActionEvent event) {
+        ObservableList<Allocation> allocs = tableView.getItems();
 
+        String staff, vehicle;
+        LocalDate localDate;
+
+        staff = driverCombo.getSelectionModel().getSelectedItem();
+        vehicle = vehicleCombo.getSelectionModel().getSelectedItem();
+        localDate = dateCombo.getValue();
+
+        if (allocs.size() > 0) {
+
+            try {
+                Document doc = new Document();
+                String fileName = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()
+                        + "\\" + schoolName
+                        + " FMIS\\Allocation " + localDate.toString() + " " + System.currentTimeMillis() + ".pdf";
+
+                PdfWriter.getInstance(doc, new FileOutputStream(fileName));
+                doc.open();
+                com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance("img/driving_32.png");
+                image.scaleToFit(120, 90);
+                doc.add(image);
+                doc.add(new Paragraph(schoolName + " Driving School - Student Allocation Report",
+                        FontFactory.getFont(FontFactory.TIMES_BOLD, 20, Font.BOLD, BaseColor.DARK_GRAY))
+                );
+                doc.add(new Paragraph("Printed by "
+                        + LoginDocumentController.firstname + " " + LoginDocumentController.lastname
+                        + " on " + new Date().toString()
+                ));
+                doc.add(Chunk.NEWLINE);
+                doc.add(new LineSeparator());
+                doc.add(Chunk.NEWLINE);
+
+                PdfPTable table0 = new PdfPTable(2);
+                PdfPCell titleCell0 = new PdfPCell(new Paragraph("Allocation Summary"));
+                titleCell0.setColspan(4);
+                titleCell0.setBorder(Rectangle.NO_BORDER);
+                titleCell0.setHorizontalAlignment(Element.ALIGN_CENTER);
+                titleCell0.setBackgroundColor(BaseColor.LIGHT_GRAY);
+
+                table0.addCell(titleCell0);
+                table0.addCell("Date:");
+                table0.addCell(localDate.toString());
+                table0.addCell("Instructor:");
+                table0.addCell(staff);
+                table0.addCell("Vehicle:");
+                table0.addCell(vehicle);
+
+                PdfPTable table1 = new PdfPTable(6);
+                PdfPCell titleCell1 = new PdfPCell(new Paragraph("Allocation Details"));
+                titleCell1.setColspan(14);
+                titleCell1.setBorder(Rectangle.NO_BORDER);
+                titleCell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                titleCell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+
+                table1.addCell(titleCell1);
+                table1.addCell("TIME");
+                table1.addCell("STUDENT");
+                table1.addCell("LESS");
+                table1.addCell("BAL");
+                table1.addCell("CONTACT");
+                table1.addCell("PENDING");
+
+                for (Allocation a : allocs) {
+                    table1.addCell(a.getTime());
+                    table1.addCell(a.getStudentName());
+                    table1.addCell(String.valueOf(a.getLess()));
+                    table1.addCell(String.valueOf(a.getBal()));
+                    table1.addCell(a.getStudentContact());
+                    table1.addCell(a.getPendingStudentName());
+                }
+
+                report(doc, fileName, table0, table1);
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            makeAlert("warning", "Nothing to report");
+        }
     }
 
     @FXML
@@ -123,7 +234,7 @@ public class AllocationsController {
                 showNotification("Allocation Has been added Succesfully");
                 loadAllocations(allocation.getStaff(), allocation.getVehicle(), allocation.getDate());
                 clearFields();
-                
+
             } else {
                 makeAlert("error", "We have Encountered an Error!\n"
                         + "Seems like this allocation exists\n"
@@ -147,6 +258,11 @@ public class AllocationsController {
 
             }
         }
+    }
+
+    @FXML
+    void delete(ActionEvent event) {
+        
     }
 
     private void prepareTable() {
@@ -227,7 +343,7 @@ public class AllocationsController {
     private void loadTimeRanges() {
         ObservableList<String> txt = FXCollections.observableArrayList();
 
-        txt.addAll("06:30-7:00", "07:00-07:30", "07:30-08:00", "08:00-08:30",
+        txt.addAll("06:30-07:00", "07:00-07:30", "07:30-08:00", "08:00-08:30",
                 "08:30-09:00", "09:00-09:30", "09:30-10:00", "10:30-11:00",
                 "11:30-12:00", "12:00-12:30", "12:30-13:00", "13:00-13:30",
                 "13:30-14:00", "11:30-12:00", "14:30-15:00", "15:00-15:30",

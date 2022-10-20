@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 11, 2022 at 01:22 PM
+-- Generation Time: Oct 20, 2022 at 05:58 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -45,22 +45,6 @@ CREATE TABLE IF NOT EXISTS `allocations` (
   KEY `staff` (`staff`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `allocations`
---
-
-INSERT INTO `allocations` (`vehicle`, `student`, `pending`, `staff`, `date`, `less`, `bal`, `time`, `dateAdded`) VALUES
-('MHG1020', 32654, 32655, 4, '2022-10-10', 34, 12, '06:30-7:00', '2022-10-11 12:54:02'),
-('MHG1020', 32651, 32654, 4, '2022-10-10', 12, 12, '07:00-07:30', '2022-10-11 09:57:42'),
-('MHG1020', 32654, 32655, 4, '2022-10-10', 34, 12, '07:30-08:00', '2022-10-11 12:55:14'),
-('MHG1020', 32652, 32656, 4, '2022-10-10', 1, 1, '08:00-08:30', '2022-10-11 09:58:03'),
-('MHG1020', 32651, 32653, 4, '2022-10-10', 34, 12, '09:00-09:30', '2022-10-11 13:00:40'),
-('MHG1020', 32657, 32655, 4, '2022-10-10', 23, 10, '09:30-10:00', '2022-10-11 13:09:46'),
-('MHG1020', 32656, 32653, 4, '2022-10-10', 12, 10, '10:30-11:00', '2022-10-11 13:19:24'),
-('MHG1020', 32653, 32656, 4, '2022-10-10', 10, 10, '11:30-12:00', '2022-10-11 14:26:28'),
-('MHG1020', 32655, 32653, 4, '2022-10-10', 34, 34, '12:00-12:30', '2022-10-11 15:12:01'),
-('MHG1020', 32657, 32658, 4, '2022-10-10', 40, 12, '17:00-17:30', '2022-10-11 13:02:01');
-
 -- --------------------------------------------------------
 
 --
@@ -79,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `commisionrate` (
 --
 
 INSERT INTO `commisionrate` (`id`, `rate`) VALUES
-(1, 2.5);
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -103,11 +87,8 @@ CREATE TABLE IF NOT EXISTS `commisions` (
 --
 
 INSERT INTO `commisions` (`test`, `employee`, `commision`, `isPaid`, `datePaid`) VALUES
-(1, 3, 4400, 0, NULL),
-(4, 4, 4400, 0, NULL),
-(6, 5, 4730, 1, '2022-10-05 22:43:16'),
-(10, 5, 2200, 0, NULL),
-(11, 5, 3902.5, 1, '2022-10-06 07:51:07');
+(1, 3, 10000, 1, '2022-10-14 09:02:52'),
+(2, 5, 8000, 1, '2022-10-14 09:02:52');
 
 -- --------------------------------------------------------
 
@@ -131,11 +112,11 @@ CREATE TABLE IF NOT EXISTS `courseduration` (
 --
 
 INSERT INTO `courseduration` (`courseID`, `duration`, `date`, `fees`, `updatedOn`) VALUES
-(21, 12, '2022-08-05 00:13:44', 280000, NULL),
-(21, 13, '2022-08-05 00:13:26', 350000, NULL),
 (22, 12, '2022-08-05 00:12:59', 175000, NULL),
 (22, 13, '2022-08-05 00:12:25', 200000, NULL),
-(23, 13, '2022-08-17 14:13:57', 100000, NULL);
+(23, 13, '2022-08-17 14:13:57', 100000, NULL),
+(24, 12, '2022-10-14 08:48:06', 200000, NULL),
+(24, 13, '2022-10-14 08:47:50', 400000, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,16 +132,16 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `governmentFee` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`code`, `name`, `id`, `governmentFee`) VALUES
-('c1', 'heavy goods', 21, 50000),
 ('b', 'light goods', 22, 40000),
-('a1', 'motocycle', 23, 30000);
+('a1', 'motocycle', 23, 30000),
+('c1', 'Heavy goods', 24, 56000);
 
 -- --------------------------------------------------------
 
@@ -174,13 +155,6 @@ CREATE TABLE IF NOT EXISTS `discounts` (
   `amount` float DEFAULT NULL,
   PRIMARY KEY (`student`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `discounts`
---
-
-INSERT INTO `discounts` (`student`, `amount`) VALUES
-(32645, 5000);
 
 -- --------------------------------------------------------
 
@@ -202,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `durations` (
 --
 
 INSERT INTO `durations` (`name`, `days`, `id`) VALUES
-('half course', 40, 12),
-('full course', 60, 13);
+('half course', 20, 12),
+('full course', 40, 13);
 
 -- --------------------------------------------------------
 
@@ -315,18 +289,20 @@ CREATE TABLE IF NOT EXISTS `payments` (
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   KEY `expense` (`expense`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payments`
 --
 
 INSERT INTO `payments` (`id`, `expense`, `date`, `amount`, `mode`, `user`, `ref`, `dateOfPayment`, `mirage`) VALUES
-(1, 'stationery', '2022-08-13 17:05:23', 100000, 'TNM Mpamba', 'mmhango', 'djd9929', '2022-08-31', 'kaya man'),
-(3, 'bundle', '2022-09-05 11:49:57', 100000, 'Cheque', 'mmhango', 'ak822839949', '2022-09-12', 'for september'),
-(4, 'stationery', '2022-09-06 15:16:48', 50000, 'Cash', 'davie', '', '2022-09-21', 'for october'),
-(5, 'rent', '2022-09-06 15:20:52', 40000, 'Cheque', 'davie', 'dkdkdkf99393030', '2022-09-28', 'for september'),
-(6, 'stationery', '2022-09-21 09:56:25', 200000, 'Cash', 'mike', '', '2022-10-04', 'for october');
+(1, 'stationery', '2022-08-13 17:05:23', 100000, 'TNM Mpamba', NULL, 'djd9929', '2022-08-31', 'kaya man'),
+(3, 'bundle', '2022-09-05 11:49:57', 100000, 'Cheque', NULL, 'ak822839949', '2022-09-12', 'for september'),
+(4, 'stationery', '2022-09-06 15:16:48', 50000, 'Cash', NULL, '', '2022-09-21', 'for october'),
+(5, 'rent', '2022-09-06 15:20:52', 40000, 'Cheque', NULL, 'dkdkdkf99393030', '2022-09-28', 'for september'),
+(6, 'stationery', '2022-09-21 09:56:25', 200000, 'Cash', 'mike', '', '2022-10-04', 'for october'),
+(7, 'bundle', '2022-10-14 07:49:10', 10000, NULL, 'mike', '', '2022-10-11', 'oct'),
+(8, 'rent', '2022-10-14 07:56:12', 100000, NULL, 'mike', '', '2022-10-04', 'oct');
 
 -- --------------------------------------------------------
 
@@ -348,24 +324,36 @@ CREATE TABLE IF NOT EXISTS `receipts` (
   PRIMARY KEY (`receiptNo`),
   KEY `studentID` (`studentID`),
   KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `receipts`
 --
 
 INSERT INTO `receipts` (`receiptNo`, `studentID`, `date`, `amount`, `modeOfPayment`, `paymentOf`, `user`, `reference`, `dateOfPayment`) VALUES
-(6, 32645, '2022-08-06 15:28:50', 15000, 'Cheque', 'Blue Card', 'mmhango', '', '2022-08-04'),
-(7, 32645, '2022-08-06 15:39:41', 85000, 'Cash', 'Blue Card', 'mmhango', '', '2022-08-19'),
-(10, 32645, '2022-08-17 13:46:26', 10000, 'Airtel Money', 'Fees', 'mike', '100202993', '2022-08-12'),
-(11, 32645, '2022-08-17 13:46:47', 50000, 'Cash', 'Blue Card', 'mike', '', '2022-08-04'),
-(12, 32650, '2022-08-17 14:32:34', 150000, 'Cash', 'Fees', 'mmhango', '18192990', '2022-08-24'),
-(13, 32645, '2022-09-05 11:38:27', 40000, 'Cash', 'Fees', 'mmhango', '1020203930', '2022-09-07'),
-(14, 32645, '2022-09-06 15:17:51', 5000, 'Cheque', 'Fees', 'davie', '2738949404040', '2022-08-31'),
-(15, 32651, '2022-09-06 15:19:56', 50000, 'Cash', 'Fees', 'davie', '', '2022-09-01'),
-(16, 32656, '2022-09-21 09:08:45', 100000, 'Cash', 'Fees', 'mike', '10203030304', '2022-09-22'),
-(17, 32658, '2022-09-21 09:16:16', 100000, 'Cheque', 'Fees', 'mike', '182293004cacg', '2022-09-01'),
-(18, 32653, '2022-09-21 09:54:14', 150000, 'Cash', 'Fees', 'mike', '', '2022-08-31');
+(20, 32659, '2022-10-14 09:06:15', 100000, 'Cash', 'Fees', 'mike', '', '2022-10-05'),
+(21, 32659, '2022-10-19 10:24:02', 100000, 'Cash', 'Fees', 'mike', '1029293393ka', '2022-10-04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `security_key`
+--
+
+DROP TABLE IF EXISTS `security_key`;
+CREATE TABLE IF NOT EXISTS `security_key` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `security_key` text NOT NULL,
+  `admin_email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `security_key`
+--
+
+INSERT INTO `security_key` (`id`, `security_key`, `admin_email`) VALUES
+(1, 'qnkvrswrtbvisavm', 'mikelibamba@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -382,23 +370,14 @@ CREATE TABLE IF NOT EXISTS `studentnextofkins` (
   `name` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `studentID` (`studentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `studentnextofkins`
 --
 
 INSERT INTO `studentnextofkins` (`id`, `studentID`, `phone`, `physicalAddress`, `name`) VALUES
-(15, 32645, '0884855850', 'nsambeta 4', 'mike mhangolo'),
-(19, 32650, '92992', 'kkaks', 'sjssj'),
-(20, 32651, '0993949494', 'kawale 4', 'oddeta mmango'),
-(21, 32652, '0994999494', 'nsambeta', 'mbelwa ketih'),
-(22, 32653, '09393939', 'kawale', 'kalodno'),
-(23, 32654, '0993944949', 'chemusa 2', 'israel banda'),
-(24, 32655, '0883838383', 'kawale', 'lafick '),
-(25, 32656, '0994595959', 'kawale', 'mike mhango'),
-(26, 32657, '0884844848', 'kawale', 'kasambala'),
-(27, 32658, '0993848439', 'nsambeta', 'mblemho nyirenda');
+(28, 32659, '3030304040', 'kawale', 'banda ');
 
 -- --------------------------------------------------------
 
@@ -428,24 +407,15 @@ CREATE TABLE IF NOT EXISTS `students` (
   UNIQUE KEY `trn` (`trn`),
   KEY `course` (`course`),
   KEY `duration` (`duration`)
-) ENGINE=InnoDB AUTO_INCREMENT=32659 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32660 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`studentID`, `fullname`, `postalAddress`, `phone`, `course`, `date`, `duration`, `gender`, `trn`, `dateRegistered`, `anyDiscount`, `anyGovernmentFee`, `graduated`, `addedBy`, `updatedOn`) VALUES
-(32645, 'Daves Mhango', 'area 3', '0983000049', 'b', '2022-08-05 02:56:14', 'half course', 'male', '45456556770', '2022-08-03', 1, 1, 1, 'Mike Mhango', '2022-08-23 13:46:00'),
 (32649, 'dean', 'sksks	', '03939949', 'b', '2022-08-17 11:31:18', 'full course', 'male', NULL, '2022-08-09', 0, 0, 0, 'Mirriam Mhango', '2022-08-17 11:31:18'),
-(32650, 'deannison', 'kawale	', '22990303', 'b', '2022-08-17 11:32:57', 'full course', 'male', NULL, '2022-08-04', 0, 0, 1, 'Mirriam Mhango', '2022-08-17 12:44:49'),
-(32651, 'Memory Mmango', 'kawale 2. 	', '09939449494', 'a1', '2022-09-05 08:55:35', 'full course', 'female', NULL, '2022-08-30', 0, 0, 0, 'Mike Mhango', '2022-09-05 08:55:35'),
-(32652, 'zondiwe mmbelwa', 'nsambeta', '0993949949', 'b', '2022-09-05 08:58:48', 'half course', 'male', NULL, '2022-08-31', 0, 0, 0, 'Mike Mhango', '2022-09-05 08:58:48'),
-(32653, 'umunthu ', 'll', '094949490', 'b', '2022-09-05 09:03:45', 'full course', 'male', NULL, '2022-08-31', 0, 0, 0, 'Mike Mhango', '2022-09-05 09:03:45'),
-(32654, 'Stella Banda', 'chemusa', '0993944949', 'c1', '2022-09-05 09:25:14', 'half course', 'female', NULL, '2022-09-13', 0, 0, 0, 'Mirriam Mhango', '2022-09-05 09:25:14'),
-(32655, 'wahindra lafick', 'll', '0883388383', 'a1', '2022-09-05 09:35:10', 'full course', 'male', NULL, '2022-09-07', 0, 0, 0, 'Mike Mhango', '2022-09-05 09:35:10'),
-(32656, 'faith mussa', 'll	', '08838488848', 'a1', '2022-09-05 10:38:55', 'full course', 'male', NULL, '2022-08-31', 0, 0, 0, 'Mike Mhango', '2022-09-05 10:38:55'),
-(32657, 'kasambala john', 'lilngwe', '07747474484', 'b', '2022-09-05 10:44:55', 'half course', 'male', NULL, '2022-09-07', 0, 0, 0, 'Mike Mhango', '2022-09-05 10:44:55'),
-(32658, 'Joseph Nyirenda', 'kawale 2', '0993848484', 'b', '2022-09-06 15:23:16', 'half course', 'male', NULL, '2022-09-07', 0, 1, 0, 'davie libamba', '2022-09-06 15:23:16');
+(32659, 'john banda', 'kawale', '0949494949', 'c1', '2022-10-14 08:52:15', 'full course', 'male', NULL, '2022-10-14', 0, 0, 0, 'Mike Mhango', '2022-10-14 08:52:15');
 
 -- --------------------------------------------------------
 
@@ -475,22 +445,15 @@ CREATE TABLE IF NOT EXISTS `tests` (
   `user` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `student` (`student`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tests`
 --
 
 INSERT INTO `tests` (`id`, `student`, `testName`, `date`, `dateOfTest`, `passOrFail`, `user`) VALUES
-(1, 32645, 'Road test', '2022-08-23 09:39:50', '2022-08-10', 'pass', 'Mike Mhango'),
-(2, 32650, 'Aptitude test 1', '2022-08-23 09:47:26', '2022-08-03', 'fail', 'Mike Mhango'),
-(4, 32650, 'Road test', '2022-08-23 13:44:41', '2022-08-01', 'pass', 'Mike Mhango'),
-(6, 32658, 'Road test', '2022-09-20 16:32:24', '2022-08-31', 'fail', 'Mike Mhango'),
-(7, 32656, 'Road test', '2022-09-20 16:38:49', '2022-09-07', 'fail', 'Mike Mhango'),
-(8, 32656, 'Road test', '2022-09-20 16:39:01', '2022-09-08', 'fail', 'Mike Mhango'),
-(9, 32656, 'Road test', '2022-09-20 16:39:20', '2022-08-31', 'fail', 'Mike Mhango'),
-(10, 32655, 'Road test', '2022-09-20 16:40:15', '2022-09-01', 'pass', 'Mike Mhango'),
-(11, 32652, 'Road test', '2022-10-06 07:48:52', '2022-10-11', 'pass', 'Mike Mhango');
+(1, 32659, 'Road test', '2022-10-14 08:59:22', '2022-10-13', 'pass', 'Mike Mhango'),
+(2, 32659, 'Road test', '2022-10-14 09:02:08', '2022-10-04', 'pass', 'Mike Mhango');
 
 -- --------------------------------------------------------
 
@@ -505,35 +468,26 @@ CREATE TABLE IF NOT EXISTS `trail` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `trail_to_user` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trail`
 --
 
 INSERT INTO `trail` (`id`, `username`, `date`) VALUES
-(1, 'ebeleko', '2022-09-20 06:20:18'),
 (2, 'mike', '2022-09-01 14:02:59'),
-(3, 'mmhango', '2022-09-01 14:05:18'),
 (4, 'mike', '2022-09-01 14:06:48'),
 (5, 'mike', '2022-09-01 14:08:51'),
-(6, 'mmhango', '2022-09-01 14:09:08'),
 (7, 'mike', '2022-09-01 15:28:50'),
 (8, 'mike', '2022-09-03 14:16:43'),
 (9, 'mike', '2022-09-05 08:52:57'),
 (10, 'mike', '2022-09-05 08:57:34'),
-(11, 'mmhango', '2022-09-05 09:24:15'),
 (12, 'mike', '2022-09-05 09:32:18'),
 (13, 'mike', '2022-09-05 10:37:42'),
 (14, 'mike', '2022-09-05 10:44:05'),
-(15, 'mmhango', '2022-09-05 11:37:36'),
 (16, 'mike', '2022-09-05 11:40:41'),
-(17, 'mmhango', '2022-09-05 11:49:10'),
-(18, 'mmhango', '2022-09-06 15:10:50'),
 (19, 'mike', '2022-09-06 15:14:35'),
-(20, 'davie', '2022-09-06 15:15:07'),
 (21, 'mike', '2022-09-06 15:18:42'),
-(22, 'davie', '2022-09-06 15:19:27'),
 (23, 'mike', '2022-09-06 15:30:28'),
 (24, 'mike', '2022-09-06 15:31:21'),
 (25, 'mike', '2022-09-20 16:20:58'),
@@ -541,7 +495,6 @@ INSERT INTO `trail` (`id`, `username`, `date`) VALUES
 (27, 'mike', '2022-09-20 16:42:44'),
 (28, 'mike', '2022-09-20 17:33:45'),
 (29, 'mike', '2022-09-20 17:38:22'),
-(30, 'mmhango', '2022-09-21 09:01:09'),
 (31, 'mike', '2022-09-21 09:04:15'),
 (32, 'mike', '2022-09-21 09:15:39'),
 (33, 'mike', '2022-09-21 09:53:46'),
@@ -617,7 +570,57 @@ INSERT INTO `trail` (`id`, `username`, `date`) VALUES
 (103, 'mike', '2022-10-11 13:16:34'),
 (104, 'mike', '2022-10-11 14:25:41'),
 (105, 'mike', '2022-10-11 14:36:39'),
-(106, 'mike', '2022-10-11 14:55:09');
+(106, 'mike', '2022-10-11 14:55:09'),
+(108, 'mike', '2022-10-12 09:22:05'),
+(109, 'mike', '2022-10-12 10:15:54'),
+(110, 'mike', '2022-10-12 10:44:30'),
+(111, 'mike', '2022-10-12 13:28:08'),
+(112, 'mike', '2022-10-12 13:39:45'),
+(113, 'mike', '2022-10-12 13:57:43'),
+(114, 'mike', '2022-10-12 13:59:03'),
+(115, 'mike', '2022-10-12 14:05:47'),
+(116, 'mike', '2022-10-12 14:11:30'),
+(117, 'mike', '2022-10-12 14:14:01'),
+(118, 'mike', '2022-10-12 14:16:24'),
+(119, 'mike', '2022-10-12 14:20:25'),
+(120, 'mike', '2022-10-12 14:22:15'),
+(121, 'mike', '2022-10-12 16:22:40'),
+(122, 'mike', '2022-10-13 11:18:37'),
+(123, 'mike', '2022-10-13 11:32:43'),
+(124, 'mike', '2022-10-13 11:38:21'),
+(125, 'mike', '2022-10-13 11:47:59'),
+(126, 'mike', '2022-10-13 11:51:37'),
+(127, 'mike', '2022-10-13 12:28:32'),
+(128, 'mike', '2022-10-14 07:48:26'),
+(129, 'mike', '2022-10-14 07:55:38'),
+(130, 'mike', '2022-10-14 08:38:27'),
+(131, 'mike', '2022-10-14 08:38:28'),
+(132, 'davie', '2022-10-14 08:53:33'),
+(133, 'mike', '2022-10-14 08:55:35'),
+(134, 'mike', '2022-10-18 17:03:13'),
+(135, 'mike', '2022-10-18 17:41:43'),
+(136, 'mike', '2022-10-18 17:44:08'),
+(137, 'mike', '2022-10-18 17:45:12'),
+(138, 'mike', '2022-10-18 17:49:06'),
+(139, 'mike', '2022-10-18 17:50:42'),
+(140, 'mike', '2022-10-18 17:52:45'),
+(141, 'mike', '2022-10-18 17:56:14'),
+(142, 'mike', '2022-10-18 17:57:38'),
+(143, 'mike', '2022-10-19 10:23:27'),
+(144, 'mike', '2022-10-19 19:28:44'),
+(145, 'mike', '2022-10-19 19:29:50'),
+(146, 'mike', '2022-10-19 19:31:51'),
+(147, 'mike', '2022-10-19 19:35:45'),
+(148, 'mike', '2022-10-19 19:38:39'),
+(149, 'mike', '2022-10-19 19:39:33'),
+(150, 'mike', '2022-10-19 19:40:47'),
+(151, 'mike', '2022-10-19 19:48:23'),
+(152, 'mike', '2022-10-19 19:50:33'),
+(153, 'mike', '2022-10-19 19:52:08'),
+(154, 'mike', '2022-10-19 19:53:16'),
+(155, 'mike', '2022-10-19 19:57:53'),
+(156, 'mike', '2022-10-19 19:59:06'),
+(157, 'mike', '2022-10-19 20:01:35');
 
 -- --------------------------------------------------------
 
@@ -646,11 +649,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`firstname`, `lastname`, `phone`, `email`, `date`, `password`, `role`, `image`, `username`, `isActive`) VALUES
-('davie', 'libamba', '03939339', 'davie@g.com', '2022-07-16 09:54:17', '1234', 'Accountant', 'C:\\Users\\ANOYMASS\\Pictures\\149071.png', 'davie', 1),
-('eliza', 'beleko', '039393939', 'bele@gmai.com', '2022-07-16 14:00:38', 'beleko', 'Receiptionist', '', 'ebeleko', 1),
+('davies', 'mhago', '08833939', 'davie@gmail.com', '2022-10-14 08:43:08', '1234', 'Receptionist', 'C:\\Users\\ANOYMASS\\Pictures\\149071.png', 'davie', 1),
 ('Mike', 'Mhango', '0884799203', 'mikelibamba@gmail.com', '12/12/12', 'Mike123@', 'admin', '\"\"', 'mike', 1),
-('Mirriam', 'Mhango', '0993459595', 'mirrie@gmail.com', '2022-08-04 19:25:59', '1234', 'Receptionist', 'C:\\Users\\ANOYMASS\\Pictures\\2015\\IMG-20150113-WA000 - Copy.jpg', 'mmhango', 1),
-('zondiwe', 'banda', '0994949494', 'zondi@g.com', '2022-07-16 13:54:31', '1234', 'Other', 'C:\\Users\\ANOYMASS\\Pictures\\2014\\WP_20140522_009.jpg', 'zbanda', 1);
+('mirrie', 'banda', '9393939040', 'mirrie@gmai.com', '2022-10-14 08:44:14', '1234', 'Accountant', '', 'mirrie', 1);
 
 -- --------------------------------------------------------
 
@@ -662,19 +663,19 @@ DROP TABLE IF EXISTS `vehicle`;
 CREATE TABLE IF NOT EXISTS `vehicle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `regNo` varchar(30) NOT NULL,
-  `name` varchar(30) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
+  `insurance_date` varchar(40) NOT NULL,
+  `cof_date` varchar(40) NOT NULL,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `regNo` (`regNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vehicle`
 --
 
-INSERT INTO `vehicle` (`id`, `regNo`, `name`, `date`) VALUES
-(4, 'kk1020', 'bongo', '2022-08-22 15:06:44'),
-(5, 'MHG1020', 'audii', '2022-08-22 15:08:31');
+INSERT INTO `vehicle` (`id`, `regNo`, `insurance_date`, `cof_date`, `date`) VALUES
+(7, 'KB1212', '2022-10-21', '2022-10-22', '2022-10-18 17:46:14');
 
 -- --------------------------------------------------------
 

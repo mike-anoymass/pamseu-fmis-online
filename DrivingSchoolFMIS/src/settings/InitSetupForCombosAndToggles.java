@@ -104,8 +104,7 @@ public class InitSetupForCombosAndToggles {
 
         pm.add("Cash");
         pm.add("Cheque");
-        pm.add("Airtel Money");
-        pm.add("TNM Mpamba");
+        pm.add("From other Banks");
         pm.add("Mo626");
 
         pmCombo.setItems(pm);

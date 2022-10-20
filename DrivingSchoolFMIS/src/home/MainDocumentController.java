@@ -40,6 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import static login.LoginDocumentController.userType;
 
 import static settings.AlertClass.makeAlert;
 import users.User;
@@ -132,6 +133,8 @@ public class MainDocumentController implements Initializable {
         loadHome();
 
         setTooltips();
+
+        new CheckInsuranceAndCofExpiry().check();
 
     }
 

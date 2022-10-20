@@ -70,6 +70,47 @@ public class UserQueries {
         }
         return users;
     }
+    
+    public Security getEmailKeys() {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Connection conn = new SqlConnection().DbConnector();
+
+        try {
+            pst = conn.prepareStatement("Select * from security_key");
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                 return new Security(
+                            rs.getString("admin_email"),
+                            rs.getString("security_key")
+                        );
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (pst != null) {
+                    pst.close();
+                }
+
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(UserQueries.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return new Security();
+    }
 
     public User getUser(String username) {
         PreparedStatement pst = null;

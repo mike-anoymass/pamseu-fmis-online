@@ -5,6 +5,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="ancho" fx:id="anchor" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vehicles.VehicleController">
+<AnchorPane id="ancho" fx:id="anchor" prefHeight="400.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vehicles.VehicleController">
    <children>
       <BorderPane layoutX="169.0" layoutY="93.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -52,8 +53,9 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="-26.0" prefHeight="32.0" prefWidth="586.0" spacing="20.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
                            <children>
-                              <TextField fx:id="regNoTxt" promptText="Registration Number" />
-                              <TextField fx:id="nameTxt" promptText="Name/Model of the car" />
+                              <TextField fx:id="regNoTxt" prefHeight="25.0" prefWidth="144.0" promptText="Registration Number" />
+                              <DatePicker fx:id="cof_exp" prefHeight="25.0" prefWidth="136.0" promptText="COF Expiry Date" />
+                              <DatePicker fx:id="insurance_exp" prefHeight="25.0" prefWidth="136.0" promptText="Insurance Expiry Date" />
                               <Button mnemonicParsing="false" onAction="#saveAction" style="-fx-background-color: skyblue;" text="Save">
                                  <graphic>
                                     <FontAwesomeIcon glyphName="SAVE" />

@@ -45,12 +45,10 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 import mail.Mail;
-import receipts.Receipts;
 import static settings.AlertClass.makeAlert;
 import static settings.AlertClass.makePromptAlert;
 import static settings.NotificationClass.showNotification;
 import static settings.RandomNumbers.randomNumber;
-import students.Student;
 
 public class PaymentController implements Initializable {
 

@@ -118,7 +118,7 @@ public class FinancialReportController implements Initializable {
     void printAction(ActionEvent event) {
         ObservableList<Receipts> rec = FXCollections.observableArrayList();
         ObservableList<Payment> pay = FXCollections.observableArrayList();
-         ObservableList<Commission> comm = FXCollections.observableArrayList();
+        ObservableList<Commission> comm = FXCollections.observableArrayList();
         rec = receiptsTable.getItems();
         pay = paymentsTable.getItems();
         comm = commisionTable.getItems();
@@ -203,8 +203,8 @@ public class FinancialReportController implements Initializable {
                     tablep.addCell(p.getDateOfPayment());
                     tablep.addCell(p.getAmount());
                 }
-                
-                for (Commission c : comm){
+
+                for (Commission c : comm) {
                     tablep.addCell(c.getStaff());
                     tablep.addCell(c.getDatePaid());
                     tablep.addCell(String.valueOf(c.getCommision()));
@@ -289,8 +289,8 @@ public class FinancialReportController implements Initializable {
                         paymentsForYear.add(payment);
                     }
                 }
-                
-                for (Commission commision: commisions ) {
+
+                for (Commission commision : commisions) {
 
                     if (commision.getDatePaid().startsWith(selectedYear)
                             & commision.getDatePaid().split("-")[1].equals(monthArray[0])
@@ -299,8 +299,7 @@ public class FinancialReportController implements Initializable {
                         commisionsForYear.add(commision);
                     }
                 }
-                
-                
+
             } else if (selectedMonth != null) {
                 monthArray = selectedMonth.split("~");
                 for (Receipts receipt : receiptData) {
@@ -320,8 +319,8 @@ public class FinancialReportController implements Initializable {
                         paymentsForYear.add(payment);
                     }
                 }
-                
-                for (Commission commision: commisions ) {
+
+                for (Commission commision : commisions) {
 
                     if (commision.getDatePaid().startsWith(selectedYear)
                             & commision.getDatePaid().split("-")[1].equals(monthArray[0])) {
@@ -341,23 +340,22 @@ public class FinancialReportController implements Initializable {
                         paymentsForYear.add(payment);
                     }
                 }
-                
-                for (Commission commision: commisions ) {
+
+                for (Commission commision : commisions) {
 
                     if (commision.getDatePaid().startsWith(selectedYear)) {
                         commisionsForYear.add(commision);
                     }
                 }
-                
-                
+
             }
-            
-             if (selectedMonth != null && day != null ){
-                receiptLbl.setText("Receipts in " + selectedYear + " " + monthArray[1]  + " " + day);
+
+            if (selectedMonth != null && day != null) {
+                receiptLbl.setText("Receipts in " + selectedYear + " " + monthArray[1] + " " + day);
                 label = selectedYear + " " + monthArray[1] + " " + day;
-                paymentsLbl.setText("Payments in " + selectedYear + " " + monthArray[1]  + " " + day);
+                paymentsLbl.setText("Payments in " + selectedYear + " " + monthArray[1] + " " + day);
                 commisionLbl.setText("Commisions in " + selectedYear + " " + monthArray[1] + " " + day);
-            }else if (selectedMonth == null) {
+            } else if (selectedMonth == null) {
                 receiptLbl.setText("Receipts in " + selectedYear);
                 label = selectedYear;
                 paymentsLbl.setText("Payments in " + selectedYear);
@@ -384,7 +382,7 @@ public class FinancialReportController implements Initializable {
                 makeAlert("warning", "There are no Receipts for this Period");
 
             }
-            
+
             if (commisionsForYear.size() > 0) {
                 loadCommisionDataInTable();
                 setCommisionLabel();

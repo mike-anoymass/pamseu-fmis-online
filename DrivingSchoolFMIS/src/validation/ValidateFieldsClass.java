@@ -245,8 +245,11 @@ public class ValidateFieldsClass {
         if (vehicle.getRegNo().isEmpty()) {
             errors.append("-> Vehicle Registration Number\n");
         }
-        if (vehicle.getName().isEmpty()) {
-            errors.append("-> Name or model of the car\n");
+        if (vehicle.getInsuranceDate().isEmpty()) {
+            errors.append("-> Insurance expiry date\n");
+        }
+        if (vehicle.getCofDate().isEmpty()) {
+            errors.append("-> COF expiry date\n");
         }
        
         if (errors.length() == 0) {

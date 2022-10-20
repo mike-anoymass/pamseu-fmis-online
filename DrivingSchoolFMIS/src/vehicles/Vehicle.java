@@ -13,19 +13,22 @@ public class Vehicle {
 
     private int id;
     private String regNo;
-    private String name;
+    private String cofDate;
+    private String insuranceDate;
     private String date;
 
-    public Vehicle(int id, String regNo, String name, String date) {
+    public Vehicle(int id, String regNo, String cofDate, String insuranceDate, String date) {
         this.id = id;
         this.regNo = regNo;
-        this.name = name;
+        this.cofDate = cofDate;
+        this.insuranceDate = insuranceDate;
         this.date = date;
     }
 
-    public Vehicle(String regNo, String name) {
+    public Vehicle(String regNo, String cofDate, String insuranceDate) {
         this.regNo = regNo;
-        this.name = name;
+        this.cofDate = cofDate;
+        this.insuranceDate = insuranceDate;
     }
 
     public int getId() {
@@ -44,20 +47,28 @@ public class Vehicle {
         this.regNo = regNo;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getCofDate() {
+        return cofDate;
+    }
+
+    public void setCofDate(String cofDate) {
+        this.cofDate = cofDate;
+    }
+
+    public String getInsuranceDate() {
+        return insuranceDate;
+    }
+
+    public void setInsuranceDate(String insuranceDate) {
+        this.insuranceDate = insuranceDate;
     }
 
 }

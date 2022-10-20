@@ -17,6 +17,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import users.Security;
+import users.UserQueries;
 
 /**
  *
@@ -39,19 +41,20 @@ public class Mail {
             msg.setContent(message, "text/plain");
             msg.setFrom(from);
             msg.setSubject(subject);
+            Security keys = new UserQueries().getEmailKeys();
             
             Task task = new Task() {
               @Override
                 protected Object call() throws Exception {
 
-                    Address to = new InternetAddress("mikelibamba@gmail.com");
+                    Address to = new InternetAddress(keys.getEmail());
                     msg.setRecipient(Message.RecipientType.TO, to);
 
                     Transport t = null;
                     try {
                         //  msg.setRecipient(Message.RecipientType.TO, to[i]);
                         t = session.getTransport("smtps");
-                        t.connect("smtp.gmail.com", "pamseuims", "xdjzmadbajcrbgze");
+                        t.connect("smtp.gmail.com", "pamseuims", keys.getKey());
                         t.sendMessage(msg, msg.getAllRecipients());
 
                         updateMessage("Sending Email");

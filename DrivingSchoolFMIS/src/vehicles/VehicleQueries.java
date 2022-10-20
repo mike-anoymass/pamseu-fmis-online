@@ -28,11 +28,12 @@ public class VehicleQueries {
 
         try {
             pst = conn.prepareStatement(
-                    "INSERT INTO vehicle (regNo, name , date) "
-                    + "VALUES (?, ?, NOW())"
+                    "INSERT INTO vehicle (regNo, cof_date , insurance_date) "
+                    + "VALUES (?, ?, ?)"
             );
             pst.setString(1, vehicle.getRegNo());
-            pst.setString(2, vehicle.getName());
+            pst.setString(2, vehicle.getCofDate());
+            pst.setString(3, vehicle.getInsuranceDate());
 
             return pst.execute();
         } catch (SQLException ex) {
@@ -67,12 +68,13 @@ public class VehicleQueries {
 
         try {
             pst = conn.prepareStatement("UPDATE vehicle "
-                    + "SET regNo=?, name=? "
+                    + "SET regNo=?, cof_date=?, insurance_date=? "
                     + " WHERE id=?");
 
             pst.setString(1, vehicle.getRegNo());
-            pst.setString(2, vehicle.getName());
-            pst.setInt(3, id);
+            pst.setString(2, vehicle.getCofDate());
+            pst.setString(3, vehicle.getInsuranceDate());
+            pst.setInt(4, id);
 
             return pst.execute();
         } catch (SQLException ex) {
@@ -115,7 +117,8 @@ public class VehicleQueries {
                 vehicles.add(new Vehicle(
                         rs.getInt("id"),
                         rs.getString("regNo"),
-                        rs.getString("name"),
+                        rs.getString("cof_date"),
+                        rs.getString("insurance_date"),
                         rs.getString("date")
                 ));
             }
@@ -236,7 +239,8 @@ public class VehicleQueries {
                 return new Vehicle(
                         rs.getInt("id"),
                         rs.getString("regNo"),
-                        rs.getString("name"),
+                        rs.getString("cof_date"),
+                        rs.getString("insurance_date"),
                         rs.getString("date")
                 );
             }

@@ -319,7 +319,7 @@ public class AllocationsController {
         ObservableList<String> txt = FXCollections.observableArrayList();
 
         vehicles.stream().forEach((vehicle) -> {
-            txt.addAll(vehicle.getName() + "," + vehicle.getRegNo());
+            txt.addAll("Reg #" + "," + vehicle.getRegNo());
         });
 
         vehicleCombo.setItems(txt);

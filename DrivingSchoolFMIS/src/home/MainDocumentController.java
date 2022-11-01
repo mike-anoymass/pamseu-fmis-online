@@ -167,7 +167,6 @@ public class MainDocumentController implements Initializable {
 
     public void setNameLbl(String name) {
         username = name;
-
     }
 
     @FXML
@@ -181,7 +180,7 @@ public class MainDocumentController implements Initializable {
         alert.setTitle("Please Confirm Login out");
         //alert.setGraphic(GlyphsDude.createIcon(FontAwesomeIcon.REMOVE, "20px"));
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure; You want to log out ?");
+            alert.setContentText("Are you sure; You want to log out ?");
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {

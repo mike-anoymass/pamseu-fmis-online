@@ -79,7 +79,7 @@
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </padding>
                   </HBox>
-                  <ComboBox fx:id="instructorCombo" opacity="0.74" prefHeight="25.0" prefWidth="194.0" promptText="Driver" style="-fx-background-color: #e0d8d8;" visible="false" />
+                  <ComboBox fx:id="instructorCombo" opacity="0.74" prefHeight="25.0" prefWidth="194.0" promptText="Instructor" style="-fx-background-color: #e0d8d8;" visible="false" />
                   <DatePicker fx:id="dateTxt" promptText="Date of Test" style="-fx-border-color: white;" />
                   <HBox prefHeight="17.0" prefWidth="194.0" style="-fx-background-color: grey;">
                      <children>

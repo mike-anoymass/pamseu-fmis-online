@@ -32,7 +32,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Text>
-                        <ComboBox fx:id="driverCombo" editable="true" layoutX="17.0" layoutY="98.0" prefHeight="25.0" prefWidth="330.0" promptText="Driver" />
+                        <ComboBox fx:id="driverCombo" editable="true" layoutX="17.0" layoutY="98.0" prefHeight="25.0" prefWidth="330.0" promptText="Instructor" />
                         <ComboBox fx:id="pendingCombo" editable="true" layoutX="17.0" layoutY="342.0" prefHeight="25.0" prefWidth="330.0" promptText="Pending" />
                         <ComboBox fx:id="vehicleCombo" editable="true" layoutX="18.0" layoutY="157.0" prefHeight="25.0" prefWidth="330.0" promptText="Vehicle" />
                         <ComboBox fx:id="studentCombo" editable="true" layoutX="17.0" layoutY="231.0" prefHeight="25.0" prefWidth="330.0" promptText="Student" />
@@ -70,7 +70,7 @@
                            </graphic>
                         </JFXButton>
                         <Text layoutX="16.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="75.13671875" />
-                        <Text layoutX="19.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Driver" wrappingWidth="75.13671875" />
+                        <Text layoutX="19.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructor" wrappingWidth="75.13671875" />
                         <Text layoutX="16.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle" wrappingWidth="75.13671875" />
                         <Text layoutX="16.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student" wrappingWidth="75.13671875" />
                         <Text layoutX="16.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pending" wrappingWidth="75.13671875" />

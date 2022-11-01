@@ -124,7 +124,7 @@ public class StudentTestController {
                         loadTestData();
                     }
                 } else {
-                    makeAlert("warning", "Please select The Driver for this successful road test");
+                    makeAlert("warning", "Please select The Instructor for this successful road test");
                 }
 
             } else {

@@ -27,15 +27,9 @@ public class SqlConnection {
         try {
             Connection conn;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            /*conn = DriverManager.getConnection(
-                        "jdbc:mysql://sql8.freesqldatabase.com/sql8514300", "sql8514300", "ts7U6qgcja");*/
+   
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pamseudb", "root", "");
-            /*conn = DriverManager.getConnection(
-                    "jdbc:mysql://db4free.net/pamseudb" 
-                    , "mikemhango", "mikemhango");*/
-            //conn = DriverManager.getConnection(
-            //      "jdbc:mysql://bzvoyajr23zsf9fiilka-mysql.services.clever-cloud.com:3306/bzvoyajr23zsf9fiilka" 
-            //     , "u3xep6xsotj7uwik", "ezWiXuJ7ZKac8xdifyLy");
+           
             return conn;
         } catch (ClassNotFoundException | SQLException e) {
             boolean action = makePromptAlert("Connection Lost", "You are not connected to the internet\n"
